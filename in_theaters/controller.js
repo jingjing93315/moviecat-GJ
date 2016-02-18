@@ -23,7 +23,7 @@
             //需要提前声明一下，否则请求还没有完成时，数据绑定已经完成，此时subjects是undefined
             $scope.subjects = [];
             $scope.message = '';
-            $http.get('/app/datas/in_theaters.json').then(function(res) {
+            $http.get('./datas/in_theaters.json').then(function(res) {
                 //此处代码是在异步请求完成之后才执行（需要一段时间）
                 if (res.status == 200) {
                     $scope.subjects = res.data.subjects;
