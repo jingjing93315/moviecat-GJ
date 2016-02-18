@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
     //创建正在热映模块
-    var module = angular.module('moviecat.in_theaters', ['ngRoute']);
+    var module = angular.module('moviecat.in_theaters', ['ngRoute', 'moviecat.services.http']);
     //模块路由配置
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/in_theaters', {
@@ -12,30 +12,49 @@
 
     module.controller('InTheatersController', [
         '$scope',
-        '$http',
+        'HttpService',
         //控制器执行函数
         //控制器分为两步
         //1.设计暴露的数据
         //2.设计暴露的行为
-        function($scope, $http) {
+        function($scope, HttpService) {
             //绑定假数据
             //
             //需要提前声明一下，否则请求还没有完成时，数据绑定已经完成，此时subjects是undefined
             $scope.subjects = [];
             $scope.message = '';
-            $http.get('./datas/in_theaters.json').then(function(res) {
-                //此处代码是在异步请求完成之后才执行（需要一段时间）
-                if (res.status == 200) {
-                    $scope.subjects = res.data.subjects;
-                } else {
-                    $scope.message = "获取数据错误，错误信息" + res.statusText;
-                }
-            }, function(err) {
-                $scope.message = "获取数据错误，错误信息" + res.statusText;
+            $scope.totalCount = 0;
+            HttpService.jsonp('http://api.douban.com/v2/movie/in_theaters', {}, function(data) {
+                $scope.subjects = data.subjects;
+                $scope.totalCount = data.total;
+                $scope.$apply();
+                //$apply的作用是让指定的表达式重新同步
+
 
             })
+
+
 
         }
     ]);
 
 })(angular)
+
+
+
+
+
+// var doubanApiAddress = 'http://api.douban.com/v2/movie/in_theaters';
+// $http.jsonp(doubanApiAddress + '?callback='
+//         JSON_CALLBACK ').then(function(res) {
+//         //此处代码是在异步请求完成之后才执行（需要一段时间）
+//         if (res.status == 200) {
+//             $scope.subjects = res.data.subjects;
+//         } else {
+//             $scope.message = "获取数据错误，错误信息" + res.statusText;
+//         }
+//     },
+//     function(err) {
+//         $scope.message = "获取数据错误，错误信息" + res.statusText;
+
+//     })
