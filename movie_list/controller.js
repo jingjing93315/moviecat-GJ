@@ -1,16 +1,16 @@
 (function(angular) {
     'use strict';
     //创建正在热映模块
-    var module = angular.module('moviecat.in_theaters', ['ngRoute', 'moviecat.services.http']);
+    var module = angular.module('moviecat.movie_list', ['ngRoute', 'moviecat.services.http']);
     //模块路由配置
     module.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/in_theaters/:page', {
-            templateUrl: 'in_theaters/view.html',
-            controller: 'InTheatersController'
+        $routeProvider.when('/:category/:page', {
+            templateUrl: 'movie_list/view.html',
+            controller: 'MovieListController'
         });
     }])
 
-    module.controller('InTheatersController', [
+    module.controller('MovieListController', [
         '$scope',
         '$route',
         '$routeParams',
@@ -33,7 +33,7 @@
             $scope.totalPages = 0;
             $scope.currentPage = page;
 
-            HttpService.jsonp('http://api.douban.com/v2/movie/in_theaters', {
+            HttpService.jsonp('http://api.douban.com/v2/movie/' + $routeParams.category, {
                 start: start,
                 count: count
             }, function(data) {
