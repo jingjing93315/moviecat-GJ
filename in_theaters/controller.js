@@ -19,16 +19,20 @@
         //2.设计暴露的行为
         function($scope, HttpService) {
             //绑定假数据
-            //
+            $scope.loading = true;
             //需要提前声明一下，否则请求还没有完成时，数据绑定已经完成，此时subjects是undefined
             $scope.subjects = [];
             $scope.message = '';
             $scope.totalCount = 0;
+
             HttpService.jsonp('http://api.douban.com/v2/movie/in_theaters', {}, function(data) {
                 $scope.subjects = data.subjects;
                 $scope.totalCount = data.total;
+                $scope.loading = false;
                 $scope.$apply();
+
                 //$apply的作用是让指定的表达式重新同步
+                //apply之后，数据模型上的东西都可以更新一遍
 
 
             })
