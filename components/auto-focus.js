@@ -2,7 +2,7 @@
  * @Author: sk
  * @Date:   2016-02-20 21:51:04
  * @Last Modified by:   sk
- * @Last Modified time: 2016-02-20 22:54:27
+ * @Last Modified time: 2016-02-21 00:32:42
  */
 
 (function(angular) {
@@ -24,7 +24,6 @@
                             iElm.parent().children().removeClass('active');
                             iElm.addClass('active');
                             //访问的是当前链接
-                            iElm.addClass('active');
                         }
 
                         //开发小技巧--看一下某个对象上有哪些成员

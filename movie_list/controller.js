@@ -28,14 +28,17 @@
             //需要提前声明一下，否则请求还没有完成时，数据绑定已经完成，此时subjects是undefined
             $scope.subjects = [];
             $scope.message = '';
-            $scope.title = '';
+            $scope.title = 'Loading...';
             $scope.totalCount = 0;
             $scope.totalPages = 0;
             $scope.currentPage = page;
 
             HttpService.jsonp('http://api.douban.com/v2/movie/' + $routeParams.category, {
+                //$routeParams的数据来源: 1.路由匹配出来的
+                //2.  ? 参数
                 start: start,
-                count: count
+                count: count,
+                q: $routeParams.q //没有必要处理什么时候加这个参数和不加这个参数
             }, function(data) {
                 $scope.title = data.title;
                 $scope.subjects = data.subjects;
