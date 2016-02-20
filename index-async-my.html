@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>异步加载库</title>
+    <!-- load.js  script.js header.js都可以帮助我们异步方式加载js文件 -->
+    <script src="bower_components/script.js/dist/script.js"></script>
+    <script>
+    // $script('you want to load', function() {
+
+    // })
+    //console.log($ + 'start');
+    // $script('./bower_components/jquery/dist/jquery.js', function() { // //加载完jQuery文件之后才执行（需要一定时间） // console.log($ + 'in'); // })
+
+    //执行到这里时，请求已经发出,所以回调函数会正常执行
+    //console.log($ + 'end');
+    $script(['./bower_components/angular/angular.js',
+        './bower_components/jquery/dist/jquery.js'
+    ], function() {
+        console.log(angular);
+        console.log(jQuery);
+    })
+
+    //angular-loader的作用就是在使用一些异步加载
+    //脚本库时，会自动控制依赖顺序...
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
