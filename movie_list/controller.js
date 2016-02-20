@@ -64,7 +64,7 @@
         }
     ]);
 
-})(angular)
+})(angular);
 
 
 //thinking：每页显示多少条   start=(page(页码)-1)*count

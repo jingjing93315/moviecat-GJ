@@ -4,8 +4,8 @@
 angular.module('moviecat', [
     'ngRoute',
     'moviecat.directive.auto-focus',
+    'moviecat.movie_detail',
     'moviecat.movie_list'
-
 ]).
 config(['$routeProvider', function($routeProvider) {
         $routeProvider.otherwise({ redirectTo: '/in_theaters/1' });
