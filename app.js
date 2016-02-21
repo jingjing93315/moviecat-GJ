@@ -2,18 +2,24 @@
 
 // Declare app level module which depends on views, and components
 angular.module('moviecat', [
-    'ngRoute',
-    'moviecat.directive.auto-focus',
-    'moviecat.movie_detail',
-    'moviecat.movie_list'
-]).
-config(['$routeProvider', function($routeProvider) {
+        'ngRoute',
+        'moviecat.directive.auto-focus',
+        'moviecat.movie_detail',
+        'moviecat.movie_list'
+        //通过这种方式为模块定义一些常量
+    ]).constant('AppConfig', {
+        pageSize: 10,
+        listApiAddress: 'http://api.douban.com/v2/movie/',
+        detailApiAddress: 'http://api.douban.com/v2/movie/subject/'
+    })
+    .config(['$routeProvider', function($routeProvider) {
         $routeProvider.otherwise({ redirectTo: '/in_theaters/1' });
     }])
     .controller('SearchController', [
         '$scope',
         '$route',
-        function($scope, $route) {
+        'AppConfig',
+        function($scope, $route, AppConfig) {
             $scope.input = ''; //取文本框的输入
             $scope.search = function() {
                 $route.updateParams({ category: 'search', q: $scope.input });

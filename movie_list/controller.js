@@ -15,13 +15,17 @@
         '$route',
         '$routeParams',
         'HttpService',
+        'AppConfig',
         //控制器执行函数
         //控制器分为两步
         //1.设计暴露的数据
         //2.设计暴露的行为
-        function($scope, $route, $routeParams, HttpService) {
-            //绑定假数据
-            var count = 10; //每一页的条数
+        function($scope, $route, $routeParams, HttpService, AppConfig) {
+
+            //当注入一个新的东西时候，一定要先检测一下，
+            //如果有错，会面一系列操作都会有问题
+            //console.log(AppConfig);
+            var count = AppConfig.pageSize; //每一页的条数
             var page = parseInt($routeParams.page); //当前第几页
             var start = (page - 1) * count; //当前页从哪开始
             $scope.loading = true;
@@ -33,7 +37,7 @@
             $scope.totalPages = 0;
             $scope.currentPage = page;
 
-            HttpService.jsonp('http://api.douban.com/v2/movie/' + $routeParams.category, {
+            HttpService.jsonp(AppConfig.listApiAddress + $routeParams.category, {
                 //$routeParams的数据来源: 1.路由匹配出来的
                 //2.  ? 参数
                 start: start,

@@ -15,12 +15,13 @@
         '$scope',
         '$routeParams',
         'HttpService',
-        function($scope, $routeParams, HttpService) {
+        'AppConfig',
+        function($scope, $routeParams, HttpService, AppConfig) {
             $scope.movie = {};
             $scope.loading = true;
             var id = $routeParams.id;
 
-            var apiAddress = 'http://api.douban.com/v2/movie/subject/' + id;
+            var apiAddress = AppConfig.detailApiAddress + id;
             //跨域方式
             HttpService.jsonp(apiAddress, {}, function(data) {
                 $scope.movie = data;
